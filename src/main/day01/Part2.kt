@@ -1,7 +1,7 @@
 package day01
 
+import groupUntil
 import readInput;
-import java.util.*
 
 fun main() {
 
@@ -9,17 +9,8 @@ fun main() {
     val input = readInput("day01/input.txt")
 
     val topThreeTotalCalories = input
-        .fold(LinkedList<MutableList<Int>>()) { acc, value ->
-            if(value.isEmpty()) {
-                acc.push(LinkedList())
-            } else {
-                val current = if(acc.isEmpty()) LinkedList<Int>() else acc.pop()
-                current.add(value.toInt())
-                acc.push(current)
-            }
-            acc
-        }
-        .map { it.sum() }
+        .groupUntil { it.isEmpty() }
+        .map { it.sumOf { value -> if(value.isEmpty()) 0 else value.toInt() } }
         .sortedDescending()
         .take(3)
         .sum()
