@@ -1,23 +1,23 @@
 package day04
 
 import readInput
-import contains
+import fullyOverlaps
 
 fun main() {
     val testinput = readInput("day04/testinput.txt")
     val input = readInput("day04/input.txt")
 
     val fullyOverlappingAssignments = input
-        .map { it.split(",") }
-        .map { assignments -> assignments.map { toRange(it) } }
+        .map { toRanges(it) }
         .count { intRanges ->
-            intRanges.first().contains(intRanges.last()) || intRanges.last().contains(intRanges.first())
+            intRanges.first.fullyOverlaps(intRanges.second) || intRanges.second.fullyOverlaps(intRanges.first)
         }
     println("Day 04 part 1. Num of fully overlapping assignments $fullyOverlappingAssignments")
 }
 
-fun toRange(assignment: String): IntRange {
-    val components = assignment.split("-")
-    return IntRange(components.first().toInt(), components.last().toInt())
+fun toRanges(assignmenta: String): Pair<IntRange, IntRange> {
+    val pattern = Regex("""(\d+)-(\d+),(\d+)-(\d+)""")
+    val (firstFrom, firstTo, secondFrom, secondTo) = pattern.find(assignmenta)!!.destructured
+    return IntRange(firstFrom.toInt(), firstTo.toInt()) to IntRange(secondFrom.toInt(), secondTo.toInt())
 }
 

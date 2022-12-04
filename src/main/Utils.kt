@@ -30,10 +30,10 @@ inline fun<R> List<R>.groupUntil(predicate: Predicate<R>): List<List<R>> {
     }
 }
 
-fun IntRange.contains(other: IntRange): Boolean {
+fun IntRange.fullyOverlaps(other: IntRange): Boolean {
     return this.first <= other.first && this.last >= other.last
 }
 
 fun IntRange.overlap(other: IntRange): Boolean {
-    return this.contains(other.first) || this.contains(other.last) || this.contains(other) || other.contains(this)
+    return this.first <= other.last && other.first <= this.last
 }
