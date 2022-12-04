@@ -1,6 +1,5 @@
 package day03
 
-import group
 import readInput
 typealias RucksackContents = Set<Char>
 
@@ -10,7 +9,7 @@ fun main() {
 
     val sumOfBadges = allRucksackContents
         .map { it.toSet() as RucksackContents }
-        .group(3)
+        .chunked(3)
         .map { groupRucksackContents ->
             groupRucksackContents
                 .reduce() { first, second -> first.intersect(second) }

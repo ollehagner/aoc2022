@@ -14,23 +14,6 @@ fun readInput(name: String): List<String> = File("src/main", "$name").readLines(
  */
 fun String.md5(): String = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteArray())).toString(16)
 
-/**
- * Groups list into sublists of specified size
- */
-inline fun<R> List<R>.group(size: Int): List<List<R>> {
-    return fold(
-        LinkedList<List<R>>()
-    ) {
-        acc, value ->
-        if(acc.isEmpty() || acc.last().size == size) {
-            acc.addLast(listOf(value))
-        } else {
-            val currentList = acc.removeLast()
-            acc.addLast(listOf(currentList, listOf( value)).flatten())
-        }
-        acc
-    }
-}
 
 inline fun<R> List<R>.groupUntil(predicate: Predicate<R>): List<List<R>> {
     return fold(
@@ -45,4 +28,12 @@ inline fun<R> List<R>.groupUntil(predicate: Predicate<R>): List<List<R>> {
         }
         acc
     }
+}
+
+fun IntRange.contains(other: IntRange): Boolean {
+    return this.first <= other.first && this.last >= other.last
+}
+
+fun IntRange.overlap(other: IntRange): Boolean {
+    return this.contains(other.first) || this.contains(other.last) || this.contains(other) || other.contains(this)
 }
