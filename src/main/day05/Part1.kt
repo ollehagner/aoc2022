@@ -10,7 +10,7 @@ fun main() {
         .dropWhile { it.isNotBlank() }
         .filter { it.isNotBlank() }
         .map { Move(it) }
-        .forEach { move -> stacks.executeSingleMove(move) }
+        .forEach { move -> stacks.executeSerialMove(move) }
     println("Day 5 part 1. Top of stacks:" + stacks.topOfEachStack())
 }
 
