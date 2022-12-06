@@ -37,3 +37,10 @@ fun IntRange.fullyOverlaps(other: IntRange): Boolean {
 fun IntRange.overlap(other: IntRange): Boolean {
     return this.first <= other.last && other.first <= this.last
 }
+
+inline fun <R> Iterable<R>.log(): List<R> {
+    return map { value ->
+        println(value)
+        value
+    }
+}
