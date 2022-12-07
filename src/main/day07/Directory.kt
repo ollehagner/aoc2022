@@ -1,6 +1,6 @@
 package day07
 
-class Directory(val name: String, val parent: Directory?) : Node<Int> {
+class Directory(private val name: String) : Node<Int> {
 
     private val children = mutableListOf<Node<Int>>()
     override fun value(): Int {

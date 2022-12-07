@@ -2,7 +2,7 @@ package day07
 
 import java.lang.IllegalArgumentException
 
-class File(val name: String, val value: Int) : Node<Int> {
+class File(private val name: String, private val value: Int) : Node<Int> {
 
     override fun value(): Int {
         return value

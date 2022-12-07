@@ -6,21 +6,21 @@ class Filesystem {
 
     val TOTAL_DISK_SPACE = 70000000
 
-    val dirStack = LinkedList<Directory>()
-    val root = Directory("root", null)
+    private val dirStack: Deque<Directory> = LinkedList()
 
-    init {
-        dirStack.add(root)
+    private fun root(): Directory {
+        return dirStack.last
     }
 
     fun availableDiskspace(): Int {
-        return TOTAL_DISK_SPACE - root.value()
+        return TOTAL_DISK_SPACE - root().value()
     }
 
     fun allDirectories(): List<Directory> {
         var toProcess = mutableListOf<Directory>()
         var result = mutableListOf<Directory>()
-        toProcess.addAll(root.subDirs())
+        toProcess.addAll(root().subDirs())
+        result.add(root())
         do {
             val inProgressDir = toProcess.removeFirst()
             result.add(inProgressDir)
@@ -37,9 +37,8 @@ class Filesystem {
                 }
             }
             command.matches("\\$ cd .*".toRegex()) -> {
-                val currentDir = dirStack.peek()
-                val newDir = Directory(command.substringAfter("cd "), currentDir)
-                currentDir.addChild(newDir)
+                val newDir = Directory(command.substringAfter("cd "))
+                dirStack.peek()?.addChild(newDir)
                 dirStack.push(newDir)
             }
 
