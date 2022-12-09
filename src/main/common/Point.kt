@@ -22,6 +22,10 @@ data class Point(val x: Int, val y: Int) {
         return Point(this.x + vector.x, this.y + vector.y)
     }
 
+    fun move(x: Int, y: Int): Point {
+        return Point(this.x + x, this.y + y)
+    }
+
     fun relativeTo(other: Point): Point {
         return Point(other.x - this.x, other.y - this.y)
     }
