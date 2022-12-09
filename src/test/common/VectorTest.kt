@@ -24,8 +24,8 @@ class VectorTest {
         val first = Vector(Point(0, 0), Point(3,3))
         val second = Vector(Point(0, 0), Point(-2, 2))
         val added = first.add(second)
-        assertThat(added.horizontal(), equalTo(1))
-        assertThat(added.vertical(), equalTo(5))
+        assertThat(added.horizontalDiff(), equalTo(1))
+        assertThat(added.verticalDiff(), equalTo(5))
         assertThat(added.magnitude(), equalTo(sqrt(26.0)))
     }
 
