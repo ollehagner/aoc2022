@@ -29,7 +29,7 @@ class Filesystem {
         return result
     }
 
-    fun handleCommand(command: String, output: List<String>) {
+    fun createFromCommandData(command: String, output: List<String>) {
         when {
             command == "$ cd .." -> {
                 if(dirStack.size > 1) {

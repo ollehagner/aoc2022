@@ -11,7 +11,7 @@ fun main() {
         .groupUntil { it.startsWith("$") }
 
     val filesystem = Filesystem()
-    commands.forEach { filesystem.handleCommand(it.first(), it.drop(1)) }
+    commands.forEach { filesystem.createFromCommandData(it.first(), it.drop(1)) }
 
     val totalSum = filesystem.allDirectories()
         .filter { it.value() < 100000 }
