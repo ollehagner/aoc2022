@@ -44,3 +44,10 @@ inline fun <R> Iterable<R>.log(): List<R> {
         value
     }
 }
+
+fun infiniteInts(startValue: Int): Sequence<Int> = sequence {
+    var value = startValue
+    while (true) {
+        yield(value++)
+    }
+}
