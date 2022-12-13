@@ -45,6 +45,8 @@ inline fun <R> Iterable<R>.log(): List<R> {
     }
 }
 
+inline fun <T> dequeOf(vararg elements: T): Deque<T> = if (elements.isNotEmpty()) LinkedList(elements.asList()) else LinkedList()
+
 fun infiniteInts(startValue: Int): Sequence<Int> = sequence {
     var value = startValue
     while (true) {

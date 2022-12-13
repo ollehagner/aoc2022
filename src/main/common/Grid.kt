@@ -107,6 +107,10 @@ class Grid<T> {
     }
 
     override fun toString(): String {
+        return toString() { it }
+    }
+
+    fun <R> toString(transform: (T) -> R): String {
         val sb = StringBuilder()
         val minY = Optional.ofNullable(data.keys.map { it.y }.minOf { it }).orElse(0)
         val minX = Optional.ofNullable(data.keys.map { it.x }.minOf { it }).orElse(0)
@@ -115,7 +119,7 @@ class Grid<T> {
         (minY)!!.rangeTo(maxY!!).forEach { y ->
             (minX)!!.rangeTo(maxX!!).forEach { x ->
                 if(hasValue(Point(x,y))) {
-                    sb.append(valueOf(Point(x,y)).toString())
+                    sb.append(transform.invoke(valueOf(Point(x,y))).toString())
                 } else {
                     sb.append(".")
                 }
@@ -124,4 +128,5 @@ class Grid<T> {
         }
         return sb.toString()
     }
+
 }
