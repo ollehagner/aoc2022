@@ -15,9 +15,9 @@ fun main() {
     println("Day 04 part 1. Num of fully overlapping assignments $fullyOverlappingAssignments")
 }
 
-fun toRanges(assignmenta: String): Pair<IntRange, IntRange> {
+fun toRanges(assignments: String): Pair<IntRange, IntRange> {
     val pattern = Regex("""(\d+)-(\d+),(\d+)-(\d+)""")
-    val (firstFrom, firstTo, secondFrom, secondTo) = pattern.find(assignmenta)!!.destructured
+    val (firstFrom, firstTo, secondFrom, secondTo) = pattern.find(assignments)!!.destructured
     return IntRange(firstFrom.toInt(), firstTo.toInt()) to IntRange(secondFrom.toInt(), secondTo.toInt())
 }
 
