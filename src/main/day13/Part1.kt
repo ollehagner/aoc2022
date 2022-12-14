@@ -16,6 +16,8 @@ fun main() {
 }
 
 fun validateOrder(left: Deque<String>, right: Deque<String>): Boolean {
+//    left.zip(right)
+//        .forEach { println(it.first.padEnd(20) + it.second) }
     val topLeft = left.pop().orEmpty()
     val topRight = right.pop().orEmpty()
     if(topLeft.isEmpty() && topRight.isEmpty()) {
