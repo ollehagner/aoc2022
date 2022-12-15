@@ -9,7 +9,6 @@ class Grid<T> {
     private val data = mutableMapOf<Point, T>()
 
     constructor() {
-
     }
 
     constructor(values: List<List<T>>) {
@@ -18,6 +17,10 @@ class Grid<T> {
                 data[Point(x, y)] = value
             }
         }
+    }
+
+    constructor(points: List<Point>, value: T) {
+        points.forEach { data[it] = value }
     }
 
     fun size(): Int {
