@@ -1,5 +1,7 @@
 package common
 
+import kotlin.math.abs
+
 data class Point(val x: Int, val y: Int) {
     constructor(values: String) :
             this(values.split(",").first().toInt(), values.split(",").last().toInt())
@@ -28,6 +30,10 @@ data class Point(val x: Int, val y: Int) {
 
     fun relativeTo(other: Point): Point {
         return Point(other.x - this.x, other.y - this.y)
+    }
+
+    fun manhattanDistance(other: Point): Int {
+        return abs(this.x - other.x) + abs(this.y - other.y)
     }
 
     override fun toString(): String {

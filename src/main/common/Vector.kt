@@ -1,7 +1,6 @@
 package common
 
 import java.math.BigDecimal
-import kotlin.math.abs
 import kotlin.math.sqrt
 
 
@@ -48,4 +47,10 @@ class Vector(private val from: Point, val to: Point) {
             }
         }
     }
+
+    override fun toString(): String {
+        return "Vector(from=$from, to=$to)"
+    }
+
+
 }
