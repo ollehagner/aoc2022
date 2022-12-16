@@ -18,6 +18,7 @@ fun coveredRowPositions(sensors: List<Sensor>, rowToCheck: Int): List<IntRange> 
 
     return sensors
         .map { it.rowCoverage(rowToCheck) }
+        .filterNotNull()
         .fold(listOf()) { acc, rowCoverage ->
             merge(buildList {
                 addAll(acc)
@@ -29,8 +30,8 @@ fun coveredRowPositions(sensors: List<Sensor>, rowToCheck: Int): List<IntRange> 
 fun merge(ranges: List<IntRange>): List<IntRange> {
     if(ranges.size == 1) return ranges
     val toCheck = ranges.first()
-    val overlapping = ranges.drop(1).filter { it.overlaps(toCheck) }
-    val notOverlapping = ranges.drop(1).filter { !it.overlaps(toCheck) }
+    val overlapping = ranges.drop(1).filter { it.overlapsOrAdjoins(toCheck) }
+    val notOverlapping = ranges.drop(1).filter { !it.overlapsOrAdjoins(toCheck) }
     return if(overlapping.isEmpty()) {
         listOf(listOf(toCheck), merge(ranges.drop(1))).flatten()
     } else {
@@ -48,14 +49,18 @@ fun parseInput(input: List<String>): List<Sensor> {
 
 data class Sensor(val position: Point, val beacon: Point) {
 
-    fun rowCoverage(yValue: Int): IntRange {
+    fun rowCoverage(yValue: Int): IntRange? {
         val horizontalReach = position.manhattanDistance(beacon) - abs(position.y - yValue)
-        return IntRange(position.x - horizontalReach, position.x + horizontalReach)
+        return if(horizontalReach > 0) {
+            IntRange(position.x - horizontalReach, position.x + horizontalReach)
+        } else {
+            null
+        }
     }
 }
 
-private infix fun IntRange.overlaps(other: IntRange): Boolean =
-    first <= other.last && other.first <= last
+private infix fun IntRange.overlapsOrAdjoins(other: IntRange): Boolean =
+    (first <= other.last && other.first <= last) || last + 1 == other.first || other.last + 1 == first
 
 private infix fun IntRange.merge(other: IntRange): IntRange {
     return IntRange(minOf(first, other.first), maxOf(last, other.last))
