@@ -51,7 +51,7 @@ data class Path(
 
     fun possiblePaths(): List<Path> {
         if (valves.all { it.opened }) return listOf(copy(elapsedTime = elapsedTime + 1))
-        val openValve = if (currentPosition.closed()) listOf(openValve()) else emptyList()
+        val openValve = if (currentPosition.closed() && currentPosition.flowRate != 0) listOf(openValve()) else emptyList()
         val moves =
             currentPosition
                 .connections
