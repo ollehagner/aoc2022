@@ -53,3 +53,11 @@ fun infiniteInts(startValue: Int): Sequence<Int> = sequence {
         yield(value++)
     }
 }
+
+inline fun <T> List<T>.permutations(other: List<T>): List<Pair<T, T>> {
+    return flatMap { first ->
+        other.map { second ->
+            first to second
+        }
+    }
+}
