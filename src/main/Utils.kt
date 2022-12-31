@@ -54,10 +54,18 @@ fun infiniteInts(startValue: Int): Sequence<Int> = sequence {
     }
 }
 
-inline fun <T> List<T>.permutations(other: List<T>): List<Pair<T, T>> {
+inline fun <T> List<T>.permutations(other: List<T>): List<List<T>> {
     return flatMap { first ->
         other.map { second ->
-            first to second
+            listOf(first, second)
+        }
+    }
+}
+
+inline fun <T> List<List<T>>.addPermutation(other: List<T>): List<List<T>> {
+    return flatMap { first ->
+        other.map { second ->
+            first + second
         }
     }
 }
