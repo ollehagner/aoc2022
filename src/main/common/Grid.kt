@@ -132,4 +132,23 @@ class Grid<T> {
         return sb.toString()
     }
 
+    fun <R> toStringInvertedVertical(transform: (T) -> R): String {
+        val sb = StringBuilder()
+        val minY = Optional.ofNullable(data.keys.map { it.y }.minOf { it }).orElse(0)
+        val minX = Optional.ofNullable(data.keys.map { it.x }.minOf { it }).orElse(0)
+        val maxX = Optional.ofNullable(data.keys.map { it.x }.maxOf { it }).orElse(0)
+        val maxY = Optional.ofNullable(data.keys.map { it.y }.maxOf { it }).orElse(0)
+        (maxY)!!.downTo(minY!!).forEach { y ->
+            (minX)!!.rangeTo(maxX!!).forEach { x ->
+                if(hasValue(Point(x,y))) {
+                    sb.append(transform.invoke(valueOf(Point(x,y))).toString())
+                } else {
+                    sb.append(".")
+                }
+            }
+            sb.append("\n")
+        }
+        return sb.toString()
+    }
+
 }

@@ -30,6 +30,15 @@ inline fun<R> List<R>.groupUntil(predicate: Predicate<R>): List<List<R>> {
     }
 }
 
+inline fun <T> Sequence<T>.takeUntil(predicate: (T) -> Boolean): List<T> {
+    val list = ArrayList<T>()
+    for (item in this) {
+        list.add(item)
+        if (predicate(item))
+            break
+    }
+    return list
+}
 fun IntRange.fullyOverlaps(other: IntRange): Boolean {
     return this.first <= other.first && this.last >= other.last
 }
@@ -54,6 +63,19 @@ fun infiniteInts(startValue: Int): Sequence<Int> = sequence {
     }
 }
 
+fun <T> infiniteSequence(value: T): Sequence<T> = sequence {
+    while(true) {
+        yield(value)
+    }
+}
+
+fun <T> infiniteSequence(value: List<T>): Sequence<T> = sequence {
+    val loopingIterator = LoopingIterator(value)
+    while(true) {
+        yield(loopingIterator.next())
+    }
+}
+
 inline fun <T> List<T>.permutations(other: List<T>): List<List<T>> {
     return flatMap { first ->
         other.map { second ->
@@ -68,4 +90,21 @@ inline fun <T> List<List<T>>.addPermutation(other: List<T>): List<List<T>> {
             first + second
         }
     }
+}
+
+class LoopingIterator<T>(private val items: List<T>) : Iterator<T> {
+
+    var iterator = items.iterator()
+
+    override fun hasNext(): Boolean {
+        return true
+    }
+
+    override fun next(): T {
+        if(!iterator.hasNext()) {
+            iterator = items.iterator()
+        }
+        return iterator.next()
+    }
+
 }
