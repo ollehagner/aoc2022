@@ -1,6 +1,7 @@
 package common
 
 import java.util.*
+import java.util.function.Predicate
 
 
 class Grid<T> {
@@ -19,7 +20,7 @@ class Grid<T> {
         }
     }
 
-    constructor(points: List<Point>, value: T) {
+    constructor(points: Collection<Point>, value: T) {
         points.forEach { data[it] = value }
     }
 
@@ -53,6 +54,11 @@ class Grid<T> {
 
     fun hasValue(point: Point): Boolean {
         return data.containsKey(point)
+    }
+
+    fun remove(predicate: Predicate<Point>) {
+        data.keys.filter { predicate.test(it) }
+            .forEach { data.remove(it) }
     }
 
     fun valueOfExistingPoints(points: List<Point>) : List<T> {
