@@ -39,6 +39,7 @@ inline fun <T> Sequence<T>.takeUntil(predicate: (T) -> Boolean): List<T> {
     }
     return list
 }
+
 fun IntRange.fullyOverlaps(other: IntRange): Boolean {
     return this.first <= other.first && this.last >= other.last
 }
